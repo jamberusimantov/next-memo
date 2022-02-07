@@ -1,5 +1,5 @@
 {
-    "name": "next-memories",
+    "name": "next-memo",
     "private": true,
     "scripts": {
         "dev": "next dev",
