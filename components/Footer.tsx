@@ -4,7 +4,7 @@ import styles from '../styles/Layout.module.css'
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <span>
+      <span className={styles.copyright}>
         Made with ❤ in Israel © 2022 Siman tov Jamberu. All rights reserved.
       </span>
       <div>
@@ -14,8 +14,7 @@ const Footer = () => {
           rel="noopener noreferrer">
           <span>
             <Image
-              className={styles.logo_linkedin}
-              src="/linked in.svg"
+              src="/assets/svg/linked in.svg"
               alt=""
               width={35}
               height={35}
@@ -28,8 +27,7 @@ const Footer = () => {
           rel="noopener noreferrer">
           <span>
             <Image
-              className={styles.logo_github}
-              src="/github.svg"
+              src="/assets/svg/github.svg"
               alt=""
               width={35}
               height={35} />
