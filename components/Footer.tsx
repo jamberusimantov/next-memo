@@ -14,11 +14,11 @@ const Footer = () => {
           rel="noopener noreferrer">
           <span>
             <Image
-              src="/assets/svg/linked in.svg"
+              src="/assets/svg/github.svg"
               alt=""
               width={35}
               height={35}
-            />
+              />
           </span>
         </a>
         <a
@@ -27,7 +27,7 @@ const Footer = () => {
           rel="noopener noreferrer">
           <span>
             <Image
-              src="/assets/svg/github.svg"
+              src="/assets/svg/linked in.svg"
               alt=""
               width={35}
               height={35} />
