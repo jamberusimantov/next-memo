@@ -1,0 +1,95 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: #333;
+    border: 1px solid black;
+}
+
+.input {
+    width: 100%;
+    margin: .5rem 0;
+    padding: .25rem;
+    padding-right: 33px;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #FADB6F;
+    color: #333;
+}
+
+.input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #eaeaea;
+    border: 1px solid #7DBBE6;
+}
+
+.container div {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.erase,
+.addBtn,
+.submitBtn {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px #999;
+}
+
+.erase {
+    position: absolute;
+    background-color: transparent;
+}
+
+.erase:active {
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+}
+
+.uploadInput {
+    display: none;
+}
+
+.addBtn {
+    padding: 0 .25rem;
+    margin-bottom: .5rem;
+    background-color: #fff;
+}
+
+.submitBtn {
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    width: 100%;
+}
+
+.addBtn:hover,
+.submitBtn:hover {
+    background-color: #ddd;
+}
+
+.addBtn:active,
+.submitBtn:active {
+    background-color: #ddd;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+}
+
+@media (max-width: 500px) {
+    .container form {
+        padding: .5rem;
+    }
+}

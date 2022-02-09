@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.toolbox {
+    display: flex;
+    justify-content: center;
+    height: 10%;
+    background-color: #333;
+    border-radius: 5px 5px 0 0;
+}
+
+.toolbox span {
+    padding: 0 .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainArea {
+    height: 90%;
+    border-radius: 0 0 5px 5px;
+    background-color: #7DBBE6;
+}

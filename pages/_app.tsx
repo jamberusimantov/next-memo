@@ -1,8 +1,9 @@
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../dir/types'
+import React from 'react'
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  console.log("\x1b[32mWelcome to" + " " + "\x1b[43mMap!\x1b[0m")
+  console.log("\x1b[32mWelcome to" + " " + '\x1b[43mMemo!\x1b[0m')
   console.log("\x1b[34mKeep your face to the sun and")
   console.log("\x1b[34myou will never see the shadows.")
   console.log("\x1b[31mHave \x1b[43ma great\x1b[0m \x1b[32mday")

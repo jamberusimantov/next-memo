@@ -8,7 +8,15 @@ type AppPropsWithLayout = AppProps & {
         getLayout: (page: ReactElement) => ReactNode
     }
 }
+type file ={ 
+    name: string, 
+    size: string, 
+    type: string 
+    base64: string | null | ArrayBuffer, 
+}
 
 export type {
     AppPropsWithLayout,
+    file,
+    
 }

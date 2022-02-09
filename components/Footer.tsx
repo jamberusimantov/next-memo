@@ -1,5 +1,6 @@
-import Image from 'next/image'
 import styles from '../styles/Layout.module.css'
+import { svg } from '../dir/functions'
+import React from 'react'
 
 const Footer = () => {
   return (
@@ -13,12 +14,7 @@ const Footer = () => {
           target="_blank"
           rel="noopener noreferrer">
           <span>
-            <Image
-              src="/assets/svg/github.svg"
-              alt=""
-              width={35}
-              height={35}
-              />
+          {svg('github')}
           </span>
         </a>
         <a
@@ -26,11 +22,7 @@ const Footer = () => {
           target="_blank"
           rel="noopener noreferrer">
           <span>
-            <Image
-              src="/assets/svg/linked in.svg"
-              alt=""
-              width={35}
-              height={35} />
+          {svg('linkedin')}
           </span>
         </a>
       </div>

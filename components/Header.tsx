@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import styles from '../styles/Layout.module.css'
+import React from 'react'
 
 const Header = () => {
     return (

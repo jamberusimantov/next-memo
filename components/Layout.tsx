@@ -9,8 +9,8 @@ const Layout = (props: { children: ReactElement }) => {
         <div className={styles.container}>
             <Head>
                 <title>Memo</title>
-                <meta name="application-name" content="memo app " />
-                <meta name="description" content="just another memo app " />
+                <meta name="application-name" content='Memo app'/>
+                <meta name="description" content='just another Memo app' />
                 <meta name="author" content="siman tov jamberu" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" href="/favicon.ico" />
