@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -4rem;
+    height: 4rem;
+    width: 100%;
+    background-color: #7DBBE6;
+    z-index: 2;
+}
+
+.container input {
+    font-size: large;
+    border-radius: 5px;
+    padding: .25rem;
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #FADB6F;
+    color: #333;
+}
+
+.container input:focus {
+    outline: none;
+    box-shadow: 0 0 10px 4px #eeeaea;
+    border: 1px solid #7DBBE6;
+}
+
+@media (max-width: 500px) {
+    .container {
+        bottom: -3rem;
+        height: 3rem;
+    }
+}

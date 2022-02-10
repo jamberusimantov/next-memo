@@ -49,8 +49,15 @@
     box-shadow: 0 4px #999;
 }
 
+.input_container {
+    display: flex;
+    align-items: flex-start;
+}
+
 .erase {
-    position: absolute;
+    position: relative;
+    top: .5rem;
+    height: min-content;
     background-color: transparent;
 }
 

@@ -10,17 +10,44 @@
     height: 10%;
     background-color: #333;
     border-radius: 5px 5px 0 0;
+    position: relative;
 }
 
-.toolbox span {
-    padding: 0 .5rem;
+.btn {
+    padding: .5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+.btn:active {
+    background-color: transparent;
+    transform: scale(1.2);
 }
 
 .mainArea {
     height: 90%;
     border-radius: 0 0 5px 5px;
     background-color: #7DBBE6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    padding-top: 4rem;
+}
+
+@media (max-width: 500px) {
+    .mainArea {
+        padding-top: 3rem;
+    }
 }
