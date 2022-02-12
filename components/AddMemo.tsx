@@ -1,64 +1,38 @@
 import styles from '../styles/AddMemo.module.css'
-import React, { FormEvent, useState } from 'react'
-import { svg, btn } from '../dir/functions';
-import { memo } from '../dir/types';
+import React, { FormEvent } from 'react'
+import { svg, Btn, Input, fetcher, composeURL } from '../dir/functions';
+import { useSWRConfig } from "swr";
 
-const AddMemo = () => {
-    const [memo, setMemo] = useState<memo>({ title: '', message: '', tags: '', date: '' })
+const AddMemo = (props: { creator: string, setState: () => void }) => {
+    const titleELRef = React.createRef<HTMLInputElement>()
+    const messageELRef = React.createRef<HTMLInputElement>()
+    const tagsELRef = React.createRef<HTMLInputElement>()
+    const { mutate } = useSWRConfig()
 
-    const inputWithEraser = (key: string) => {
-        switch (key) {
-            case 'title': return <div className={styles.input_container}>
-                <input
-                    className={styles.input}
-                    type="text"
-                    placeholder='Title'
-                    required
-                    value={memo.title}
-                    maxLength={50}
-                    onChange={(e) => setMemo({ ...memo, title: e.currentTarget.value })}
-                />
-                {memo.title && btn(svg('blue-erase', 20), () => setMemo({ ...memo, title: '' }), styles.erase)}
-            </div>
-            case 'message': return <div className={styles.input_container}>
-                <textarea
-                    className={styles.input}
-                    placeholder={'Message'}
-                    value={memo.message}
-                    required
-                    maxLength={500}
-                    onChange={(e) => setMemo({ ...memo, message: e.currentTarget.value })}
-                    rows={10}
-                    cols={30} />
-                {memo.message && btn(svg('blue-erase', 20), () => setMemo({ ...memo, message: '' }), styles.erase)}
-            </div>
-            case 'tags': return <div className={styles.input_container}>
-                <input
-                    className={styles.input}
-                    type="text"
-                    placeholder='Tags'
-                    required
-                    value={memo.tags}
-                    maxLength={50}
-                    onChange={(e) => setMemo({ ...memo, tags: e.currentTarget.value })}
-                />
-                {memo.tags && btn(svg('blue-erase', 20), () => setMemo({ ...memo, tags: '' }), styles.erase)}
-            </div>
-            default: { }
-        }
-    }
-    const submit = (e: FormEvent) => {
+    const submit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(memo)
+        try {
+            const url = composeURL({
+                creator: props.creator,
+                tags: `${tagsELRef.current?.value}`,
+                message: `${messageELRef.current?.value}`,
+                title: `${titleELRef.current?.value}`
+            });
+            const res = await fetcher(url, 'POST');
+            if (!res.success) throw res.error
+            console.log(res.data);
+            mutate(composeURL({}));
+            props.setState();
+        } catch (err) { console.log(err); }
     }
 
     return (
         <div className={styles.container}>
             <form onSubmit={submit}>
-                {inputWithEraser('title')}
-                {inputWithEraser('message')}
-                {inputWithEraser('tags')}
-                {btn(svg('blue-send'), undefined, styles.submitBtn, true)}
+                <Input name={'title'} ref={titleELRef} className={styles.input} />
+                <Input name={'message'} ref={messageELRef} className={styles.input} />
+                <Input name={'tags'} ref={tagsELRef} className={styles.input} />
+                <Btn child={svg('blue-send')} className={styles.submitBtn} submit={true} />
             </form>
         </div>
     )

@@ -1,5 +1,5 @@
 import styles from '../styles/Layout.module.css'
-import { svg } from '../dir/functions'
+import { svg, Btn } from '../dir/functions'
 import React from 'react'
 
 const Footer = () => {
@@ -8,22 +8,18 @@ const Footer = () => {
       <span className={styles.copyright}>
         Made with ❤ in Israel © 2022 Siman tov Jamberu. All rights reserved.
       </span>
-      <div>
+      <div className={styles.footerBtnContainer}>
         <a
           href="https://github.com/jamberusimantov"
-          target="_blank"
-          rel="noopener noreferrer">
-          <span>
-          {svg('github')}
-          </span>
+          rel="noopener noreferrer"
+          target="_blank">
+          <Btn child={svg('github')} className={styles.footerBtn} />
         </a>
         <a
           href="https://www.linkedin.com/in/siman-tov-jamberu/"
-          target="_blank"
-          rel="noopener noreferrer">
-          <span>
-          {svg('linkedin')}
-          </span>
+          rel="noopener noreferrer"
+          target="_blank">
+          <Btn child={svg('linkedin')} className={styles.footerBtn} />
         </a>
       </div>
     </footer>

@@ -37,14 +37,10 @@
 }
 
 .title_container,
-.footer div {
+.footerBtnContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.footer div {
-    padding: 0.5rem;
 }
 
 .title {
@@ -58,14 +54,33 @@
     padding: 0 0.5rem;
 }
 
-.footer a span {
-    height: 1em;
+.footerBtn {
+    height: 100%;
     margin: 0 0.5rem;
+    padding: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+.footerBtn:hover {
+    background-color: #555;
+}
+
+.btn:active {
+    background-color: transparent;
+    transform: scale(1.2);
 }
 
 .main {
     min-height: 100vh;
     padding-bottom: 4rem;
+    padding: 0;
 }
 
 @media (max-width: 1000px) {
