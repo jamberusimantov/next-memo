@@ -1,7 +1,9 @@
 import styles from '../styles/AddMemo.module.css'
 import React, { FormEvent } from 'react'
-import { svg, Btn, Input, fetcher, composeURL } from '../dir/functions';
+import { svg, Btn, Input } from '../dir/elements';
+import { fetcher, composeURL } from '../dir/functions';
 import { useSWRConfig } from "swr";
+
 
 const AddMemo = (props: { creator: string, setState: () => void }) => {
     const titleELRef = React.createRef<HTMLInputElement>()
@@ -12,7 +14,7 @@ const AddMemo = (props: { creator: string, setState: () => void }) => {
     const submit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const url = composeURL({
+            const url = composeURL('/api/memoAPI', {
                 creator: props.creator,
                 tags: `${tagsELRef.current?.value}`,
                 message: `${messageELRef.current?.value}`,
@@ -20,8 +22,7 @@ const AddMemo = (props: { creator: string, setState: () => void }) => {
             });
             const res = await fetcher(url, 'POST');
             if (!res.success) throw res.error
-            console.log(res.data);
-            mutate(composeURL({}));
+            mutate(`/api/memoAPI?creator=${props.creator}`)
             props.setState();
         } catch (err) { console.log(err); }
     }

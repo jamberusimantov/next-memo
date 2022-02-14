@@ -1,35 +1,34 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styles from '../styles/Home.module.css'
 import dbConnection from '../dir/mongoDB/connection';
 import Memos from '../dir/mongoDB/Memos';
-import { svg, Btn, fetcher, composeURL } from '../dir/functions';
+import { svg, Btn } from '../dir/elements';
+import { fetcher } from '../dir/functions';
 import { memo } from '../dir/types';
-import { Layout, AddMemo, DisplayMany, SearchMemo } from '../components';
-import useSWR, { SWRConfig } from "swr";
+import { Layout, AddMemo, DisplayMany, SearchMemo, Register } from '../components';
+import useSWR from "swr";
+import Cookies from 'js-cookie';
 
 const getServerSideProps = async () => {
   await dbConnection();
-  const docs = await Memos.find();
+  const docs = await Memos.find({ creator: 'HARDCODED' });
   return ({
     props: {
       fallback: { memos: JSON.stringify(docs) }
     }
   })
 }
-const MemoBoard = () => {
+const MemoBoard = (props: { memos: memo[] }) => {
   const [state, setState] = useState('layout')
+  const [user, setUser] = useState(Cookies.get('memo-simantov.herokuapp.com'))
   const [results, setResults] = useState<{ q: string, arr: memo[] }>({ q: '', arr: [] })
-  const { data, error } = useSWR(composeURL({}), fetcher);
+  const { data, error } = useSWR(user ? `/api/memoAPI?creator=${user}` : null, fetcher);
   const searchElRef = React.createRef<HTMLInputElement>()
-  const creator = 'HARDCODED'
-
-
-  if (error || (data && !data.success)) {
+  if (error || (data && data.error)) {
     console.log(data?.error || "An error has occurred.")
   }
-  //some spinner maybe
-  if (!data) return <h1>Loading...</h1>
-  const memos = data.data;
+  const memos = (user && data?.data.length) ? data.data : props.memos;
+
 
   return (
     <div className={styles.container}>
@@ -43,43 +42,23 @@ const MemoBoard = () => {
         }
       </div>
       <div className={styles.mainArea}>
-        {state === 'write' ?
-          <AddMemo creator={creator} setState={() => setState('layout')} />
+        {state !== 'write' ?
+          <DisplayMany memos={memos} state={state} results={results} creator={user} />
           :
-          <DisplayMany memos={memos} state={state} results={results} />
+          user ?
+            <AddMemo creator={user} setState={() => setState('layout')} />
+            : <Register setState={(user: string) => { setUser(user); setState('layout'); }} />
         }
       </div>
     </div>
   )
 }
+
 const Home = (props: { fallback: { memos: string } }) => {
+  const memos: memo[] = JSON.parse(props.fallback.memos)
 
-  useEffect(() => {
-    const time = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 365)).toUTCString();
-    const cookie = 'memo-simantov.herokuapp.com';
-    const setCookie = (cookie: string, date: string) => {
-      if (!document.cookie
-        .split('; ')
-        .find(row => row.startsWith(cookie))) {
-        document.cookie = `${cookie}=true; expires=${date}; Secure`;
-      }
-    }
-    setCookie(cookie, time)
-
-    console.log(document.cookie
-      .split('; ')
-      .find(row => row.startsWith(cookie)));
-      
-  }, [])
   return (
-    <SWRConfig value={{
-      fallback: {
-        memos: JSON.parse(props.fallback.memos)
-      },
-      // refreshInterval: 10000,
-    }}>
-      <MemoBoard />
-    </SWRConfig >
+    <MemoBoard memos={memos} />
   )
 }
 

@@ -1,20 +1,12 @@
 import React from 'react'
 import Image from "next/image"
 import styles from '../styles/Home.module.css'
-import { objectWithStringKey, keysForComposeURL } from './types'
 
 const svg = (name: string, size = 35) => <Image
     src={`/assets/svg/${name}.svg`}
     alt=""
     width={size}
     height={size}
-/>
-
-const btn = (child: any, onClick = () => { }, className = styles.btn, submit = false) => <button
-    children={child}
-    onClick={onClick}
-    className={className}
-    type={submit ? 'submit' : 'button'}
 />
 
 const Btn = (props: {
@@ -38,7 +30,7 @@ const Input = React.forwardRef((props: {
 },
     ref: any) => {
     switch (props.name) {
-        case 'title': return <div className={styles.input_container}>
+        case 'title': return <div>
             <input
                 className={props.className}
                 type="text"
@@ -66,6 +58,14 @@ const Input = React.forwardRef((props: {
             required
             maxLength={50}
         />
+        case 'phoneNumber': return <input
+            className={props.className}
+            type="tel"
+            placeholder='1234567'
+            ref={ref}
+            required
+            pattern="[0-9]{7}"
+        />
         default: return <input
             className={props.className}
             type="text"
@@ -75,22 +75,4 @@ const Input = React.forwardRef((props: {
     }
 })
 
-const composeURL = (object: objectWithStringKey) => {
-    let base = '/api/memoAPI';
-
-    if (object && Object.keys(object).length > 0) {
-        Object.keys(object).forEach((key, i) => {
-
-            if (i === 0) {
-                base += `?${key}=${encodeURI(object[key])}`
-            } else {
-                base += `&${key}=${encodeURI(object[key])}`
-            }
-        });
-    }
-    return base;
-}
-
-const fetcher = (url: string, method?: string) => fetch(url, { method: method || 'GET' }).then((res) => res.json());
-
-export { svg, btn, fetcher, composeURL, Btn, Input }
+export { svg, Btn, Input }

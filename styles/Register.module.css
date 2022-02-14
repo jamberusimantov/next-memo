@@ -20,52 +20,41 @@
     margin: .5rem 0;
     padding: .25rem;
     padding-right: 33px;
-    border-radius: 5px;
+    border-radius: 0 5px 5px 0;
     border: none;
     border-bottom: 1px solid #eaeaea;
     background-color: #FADB6F;
     color: #333;
 }
 
+.prefix:focus,
 .input:focus {
     outline: none;
     box-shadow: 0 0 10px #eaeaea;
     border: 1px solid #7DBBE6;
 }
 
+.prefix {
+    margin: .5rem 0;
+    padding: .25rem;
+    border-radius: 5px 0 0 5px;
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #FADB6F;
+    color: #333;
+}
+
 .container div {
     display: flex;
-    justify-content: flex-end;
     width: 100%;
 }
 
-.erase,
 .submitBtn {
     cursor: pointer;
     outline: none;
     border: none;
     border-radius: 10px;
     box-shadow: 0 4px #999;
-}
-
-.input_container {
-    display: flex;
-    align-items: flex-start;
-}
-
-.erase {
-    position: relative;
-    top: .5rem;
-    height: min-content;
-    background-color: transparent;
-}
-
-.erase:active {
-    box-shadow: 0 2px #666;
-    transform: translateY(2px);
-}
-
-.submitBtn {
     padding: 0 1rem;
     margin-bottom: 1rem;
     background-color: #fff;

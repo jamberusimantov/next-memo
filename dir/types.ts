@@ -21,6 +21,11 @@ type memo = objectWithStringKey & {
     createdAt?: string,
     _id?: string
 }
+type user = {
+    phoneNumber: String,
+    _id?: string
+}
+
 type response = {
     success: boolean,
     data: any,
@@ -30,14 +35,6 @@ type response = {
 type objectWithStringKey = {
     [key: string]: string
 }
-enum myEnum {
-    message = "",
-    tags = "",
-    creator = "",
-    id = "",
-    title = "",
-}
-type keysForComposeURL = keyof typeof myEnum
 
 export type {
     AppPropsWithLayout,
@@ -45,5 +42,6 @@ export type {
     memo,
     response,
     objectWithStringKey,
-    keysForComposeURL
+    user,
+
 }

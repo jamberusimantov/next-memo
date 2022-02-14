@@ -2,6 +2,7 @@
         display: grid;
         grid-template-columns: auto auto auto auto auto;
         grid-template-rows: auto;
+        gap: 1rem;
     }
     
     .memo_container {
@@ -10,12 +11,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 2rem 2rem 2rem 1rem;
+        padding: 2rem 1rem;
         border: 1px solid #333;
         border-radius: 10px;
         background-color: #FADB6F;
         color: #333;
-        margin: 0 1rem 1rem 1rem;
+        width: 250px;
     }
     
     .side_border {
@@ -58,13 +59,13 @@
         }
     }
     
-    @media (max-width: 1000px) {
+    @media (max-width: 900px) {
         .memoBoard {
             grid-template-columns: auto auto;
         }
     }
     
-    @media (max-width: 700px) {
+    @media (max-width: 600px) {
         .memoBoard {
             grid-template-columns: auto;
         }

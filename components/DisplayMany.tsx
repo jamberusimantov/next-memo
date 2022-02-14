@@ -1,11 +1,16 @@
 import styles from '../styles/DisplayMany.module.css'
 import { memo } from '../dir/types'
-import { svg, Btn, fetcher, composeURL } from '../dir/functions'
+import { svg, Btn } from '../dir/elements'
+import { fetcher, composeURL, isValidId } from '../dir/functions'
 import React from 'react'
 import { useSWRConfig } from "swr";
 
 
-const Memo = (props: { memo: memo, erase: boolean, deleteHandler: () => Promise<void> }) => {
+const Memo = (props: {
+    memo: memo,
+    erase: boolean,
+    deleteHandler: () => Promise<void>
+}) => {
     return (
         <div className={styles.memo_container}>
             <div className={`${styles.memo_section}${' '}${styles.memo_title}`}>
@@ -17,11 +22,6 @@ const Memo = (props: { memo: memo, erase: boolean, deleteHandler: () => Promise<
             <div className={`${styles.memo_section}${' '}${styles.memo_tags}`}>
                 {props.memo.tags}
             </div>
-            {props.memo.createdAt &&
-                <div className={styles.memo_section}>
-                    {props.memo.createdAt}
-                </div>
-            }
             <div className={styles.side_border}></div>
             <div className={styles.memo_delete}>
                 {props.erase && <Btn child={svg('delete')} onClick={props.deleteHandler} />}
@@ -29,20 +29,25 @@ const Memo = (props: { memo: memo, erase: boolean, deleteHandler: () => Promise<
         </div>)
 }
 
-const DisplayMany = (props: { memos: memo[], state: string, results: { q: string, arr: memo[] } }) => {
+const DisplayMany = (props: {
+    memos: memo[],
+    state: string,
+    results: { q: string, arr: memo[] }
+    creator: string | undefined
+}) => {
     const { mutate } = useSWRConfig()
     const arr = props.results.q ? props.results.arr : props.memos;
-
+    const creator = props.creator
+    
     const deleteMemo = async (props: { id: string | undefined }) => {
-        if (!props.id) return;
-        const url = composeURL({
+        if (!props.id || !isValidId(props.id)) return;
+        const url = composeURL('/api/memoAPI', {
             id: props.id
         })
         try {
             const res = await fetcher(url, 'DELETE');
             if (!res.success) throw res.error
-            console.log(res.data);
-            mutate(composeURL({}));
+            mutate(`/api/memoAPI?creator=${creator}`)
         } catch (err) { console.log(err); }
     }
 
@@ -53,7 +58,11 @@ const DisplayMany = (props: { memos: memo[], state: string, results: { q: string
                     <Memo
                         memo={memo}
                         key={i}
-                        erase={props.state === 'erase'}
+                        erase={
+                            props.state === 'erase' &&
+                            !!props.creator &&
+                            memo.creator === props.creator
+                        }
                         deleteHandler={() => deleteMemo({ id: memo._id })}
                     />
                 )

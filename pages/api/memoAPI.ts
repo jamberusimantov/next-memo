@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Memos from '../../dir/mongoDB/Memos';
 import { response, memo } from '../../dir/types';
+import { isValidId } from '../../dir/functions';
 
 const memoAPI = async (req: NextApiRequest, res: NextApiResponse<response>) => {
 
@@ -8,30 +9,33 @@ const memoAPI = async (req: NextApiRequest, res: NextApiResponse<response>) => {
   try {
     switch (req.method) {
       case 'GET': {
-        console.log('getting all from DB');
-        const posts = await Memos.find();
-        if (!posts) throw new Error(`${req.method}:all falsy no data`);
-        console.log(`got from DB :${posts.length} docs`);
-        return res.status(200).json({ success: true, data: posts })
+        if (creator) {
+          console.log(`getting creator: ${creator} memos from DB`);
+          const posts: memo[] = await Memos.find({ creator });
+          if (!posts) throw new Error(`${req.method}:all falsy no data`);
+          console.log(`got from DB :${posts.length} docs of creator ${creator}`);
+          return res.status(200).json({ success: true, data: posts })
+        }
+        throw new Error(`${req.method}:missing creator for action`);
       }
       case 'POST': {
         if (creator && tags && message && title) {
           console.log('saving to DB :', { creator, tags, message, title });
           const post: memo[] = await Memos.insertMany([{ creator, tags, message, title }])
           if (!post) throw new Error(`${req.method}:${title} falsy no data`);
-          if (!post[0]._id) throw new Error(`${req.method}:${post}:failure`);
-          console.log('saved to DB :', post[0]._id);
+          if (!isValidId(post[0]?._id)) throw new Error(`${req.method}:${post}:failure`);
+          console.log(`saved to DB : memo ${post[0]._id} of creator ${creator}`);
           return res.status(200).json({ success: true, data: `${req.method}:${title}:success` })
         }
         throw new Error(`${req.method}:missing params for action`);
       }
       case 'DELETE': {
-        if (id) {
+        if (id && isValidId(id)) {
           console.log('deleting from DB :', id);
-          const post = await Memos.findByIdAndDelete(id)
+          const post: memo | null = await Memos.findByIdAndDelete(id)
           if (!post) throw new Error(`${req.method}:${id} falsy no data`);
-          if (!post._id) throw new Error(`${req.method}:${post}:failure`);;
-          console.log('deleted from DB :', post._id);
+          if (!isValidId(post?._id)) throw new Error(`${req.method}:${post}:failure`);;
+          console.log(`deleted from DB :memo ${post._id} of creator ${post.creator}`);
           return res.status(200).json({ success: true, data: `${req.method}:${id}:success` })
         }
         throw new Error(`${req.method}:missing params for action`);

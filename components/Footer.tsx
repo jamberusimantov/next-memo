@@ -1,5 +1,5 @@
 import styles from '../styles/Layout.module.css'
-import { svg, Btn } from '../dir/functions'
+import { svg, Btn } from '../dir/elements'
 import React from 'react'
 
 const Footer = () => {
