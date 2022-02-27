@@ -1,5 +1,5 @@
 # Welcome to Memo!
-just another memo web service :) 
+just another memo service :) 
 
 Keep your face to the sun and you will never see the shadows.
 
